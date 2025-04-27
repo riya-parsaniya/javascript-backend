@@ -94,4 +94,8 @@ const register = asyncHandler(async (req, res) => {
 // return res
 
 
-export {registerUser}
+export {
+
+    registerUser,
+
+       }
