@@ -1,8 +1,9 @@
-import { asyncHandler } from "../untils/asyncHandler";
+import { asyncHandler } from "../utils/asyncHandler";
 import {ApiError} from "../untils/ApiError.js";
 import { User } from "../models/user.model.js";
 import { uploadcloudinary} from "../utils/cloudinary.js";
 import { ApiResponse } from "../untils/ApiResponse.js";
+import {registerUser} from "../services/user.service.js";
 
 const register = asyncHandler(async (req, res) => {
     // {
@@ -96,6 +97,6 @@ const register = asyncHandler(async (req, res) => {
 
 export {
 
-    registerUser,
+    registerUser
 
        }
