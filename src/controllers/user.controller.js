@@ -6,12 +6,12 @@ import { ApiResponse } from "../untils/ApiResponse.js";
 import {registerUser} from "../services/user.service.js";
 
 const register = asyncHandler(async (req, res) => {
-    // {
-    //      res.status(200).json({
-    //         message: "ok",
-    //         // user: req.body
-    //     });
-    // }
+    {
+         res.status(200).json({
+            message: "ok",
+            // user: req.body
+        });
+    }
 
 
 
@@ -32,7 +32,7 @@ const register = asyncHandler(async (req, res) => {
         throw new ApiError(400, "All fields are required")
     }
 
-   const existedUser = User.findOne({
+   const existedUser =  await User.findOne({
         $or: [
             {
                 username
@@ -53,7 +53,9 @@ const register = asyncHandler(async (req, res) => {
         throw new ApiError(400, "Avatar is required")
     }
 
-    const avatar = await uploadOncloudinary(avatarLocalPath)
+    // const avatar = await uploadOncloudinary(avatarLocalPath)
+    const avatar = await uploadcloudinary(avatarLocalPath);
+
     const coverImage = await uploadOncloudinary(coverImageLocalPath)
 
     if(!avatar) {
@@ -70,7 +72,9 @@ const register = asyncHandler(async (req, res) => {
     })
 
 
-    user.findById(user._id).select("-password -refreshToken")
+    // user.findById(user._id).select("-password -refreshToken")
+
+    const userToReturn = await User.findById(user._id).select("-password -refreshToken");
 
     if(!createduser)
  
@@ -79,7 +83,7 @@ const register = asyncHandler(async (req, res) => {
         }
 
         return res.status(201).json(
-            new ApiResponse(200, createUuser, "User created successfully")
+            new ApiResponse(200, createduser, "User created successfully")
         ) 
 });
 
@@ -95,8 +99,4 @@ const register = asyncHandler(async (req, res) => {
 // return res
 
 
-export {
-
-    registerUser
-
-       }
+export { registerUser };
